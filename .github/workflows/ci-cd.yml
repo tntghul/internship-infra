@@ -10,29 +10,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout code
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # Docker login
       - name: Login to Docker Hub
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
-      # Backend
       - name: Build Backend
         run: docker build -t ${{ secrets.DOCKER_USERNAME }}/backend:latest ./backend
 
       - name: Push Backend
         run: docker push ${{ secrets.DOCKER_USERNAME }}/backend:latest
 
-      # Frontend
       - name: Build Frontend
         run: docker build -t ${{ secrets.DOCKER_USERNAME }}/frontend:latest ./frontend
 
       - name: Push Frontend
         run: docker push ${{ secrets.DOCKER_USERNAME }}/frontend:latest
 
-      # Worker
       - name: Build Worker
         run: docker build -t ${{ secrets.DOCKER_USERNAME }}/worker:latest ./worker
 
